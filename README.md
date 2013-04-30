@@ -3,9 +3,7 @@
 [![Build Status](https://secure.travis-ci.org/mccraigmccraig/clomponents.png)](http://travis-ci.org/mccraigmccraig/clomponents)
 
 
-Stupid simple component management for clojure apps
-
-## Usage
+## Stupid simple component management for clojure apps
 
 a component is some resource with a create/destroy lifecycle. clomponents gives you a registry of components, and
 a way of defining functions to create/destroy/do-other-things the components
@@ -21,34 +19,44 @@ a destroy function may also be defined, which takes two arguments : the config a
 
 further arbitrary action functions may be defined, and they will also take the same two arguments as destroy : the config and object
 
-   (require '[clomponents.core :as clom])
+## Usage
 
-   ;; define some components
-   (def comps {:foo {:ns 'foo}
+add the dependency to your project.clj
 
-               :bar {:create 'bar/create-me :destroy 'bar/destroy-me :meep 'bar/meep-me}
+    [clomponents "0.1.0"]
 
-               :baz {:create (fn [config] {:baz config})
-                     :bloop (fn [config obj] (prn "bloop!") (prn config) (prn obj))}
+define some components
 
-   (def registry (clom/create-registry comps))
+    ;; define some components
+    (def comps {:foo {:ns 'foo}
 
-   ;; instantiate components
-   (create registry :foo)
-   (create registry :bar)
-   (create registry :baz)
+                :bar {:create 'bar/create-me :destroy 'bar/destroy-me :meep 'bar/meep-me}
 
-   ;; retrieve component objects
-   (object registry :foo)
+                :baz {:create (fn [config] {:baz config})
+                      :bloop (fn [config obj] (prn "bloop!") (prn config) (prn obj))}
 
-   ;; do some arbitrary actions
-   (perform registry :bar :meep)
-   (perform registry :baz :bloop)
+create a registry and manage the components
 
-   ;; tear down the components
-   (destroy registry :foo)
-   (destroy registry :bar)
-   (destroy registry :baz)
+    (require '[clomponents.core :as clom])
+
+    (def registry (clom/create-registry comps))
+
+    ;; instantiate components
+    (create registry :foo)
+    (create registry :bar)
+    (create registry :baz)
+
+    ;; retrieve component objects
+    (object registry :foo)
+
+    ;; do some arbitrary actions
+    (perform registry :bar :meep)
+    (perform registry :baz :bloop)
+
+    ;; tear down the components
+    (destroy registry :foo)
+    (destroy registry :bar)
+    (destroy registry :baz)
 
 
 ## License
