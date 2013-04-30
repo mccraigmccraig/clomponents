@@ -61,7 +61,10 @@
          result))))
 
   (object [this]
-    @obj)
+   (dosync
+    (if (ensure obj)
+      @obj
+      (create this))))
 
   (perform [this action]
     (dosync

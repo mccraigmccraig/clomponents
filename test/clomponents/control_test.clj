@@ -30,7 +30,8 @@
     (object cl) => ..obj..
 
     (destroy cl) => :destroy
-    (object cl) => nil))
+    @(:obj cl) => nil
+    (object cl)) => ..obj..)
 
 (fact "no destroy function"
   (let [c (fn [config] (fact (:id config) => ..id..) ..obj..)
@@ -40,7 +41,8 @@
     (object cl) => ..obj..
 
     (destroy cl) => nil
-    (object cl) => nil))
+    @(:obj cl) => nil
+    (object cl) => ..obj..))
 
 (fact "if destroy function borks"
   (let [c (fn [config] (fact (:id config) => ..id..) ..obj..)
@@ -54,7 +56,8 @@
     (provided
       (log/log* anything :warn anything anything) => nil)
 
-    (object cl) => nil))
+    @(:obj cl) => nil
+    (object cl) => ..obj..))
 
 (fact "perform an arbitrary action"
   (let [c (fn [config] (fact (:id config) => ..id..) ..obj..)
