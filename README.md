@@ -6,18 +6,18 @@
 ## Stupid simple component management for clojure apps
 
 a component is some resource with a create/destroy lifecycle. clomponents gives you a registry of components, and
-a way of defining functions to create/destroy/do-other-things the components
+a way of defining functions to create/destroy/do-other-things to the components
 
-each component is defined by a config hash. there must at least be a create function for the component, which takes a single argumen (the config), and can be found by
+each component is defined by a config hash. there must at least be a create function for the component, which takes a single argument (the config)
+
+a destroy function may also be defined, which takes two arguments : the config and the object, and further arbitrary action functions may be defined, which will also take the same two arguments as destroy : the config and object
+
+functions can be found in several ways :
 
 * namespace qualified reference : `{:create 'foo/create-me}`
 * default namespace and unqualified reference : `{:ns 'foo :create 'create-me}`
-* default name `create` in namespace : `{:ns 'foo}` will use `'foo/create`
+* default name in namespace : `{:ns 'foo}` will use `'foo/create` for creation and `'foo/destroy` for destruction
 * literal function : `{:create (fn [config] "do something"}`
-
-a destroy function may also be defined, which takes two arguments : the config and the object
-
-further arbitrary action functions may be defined, and they will also take the same two arguments as destroy : the config and object
 
 ## Usage
 
