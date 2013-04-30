@@ -19,7 +19,9 @@
           (let [use-ns (:ns config)
                 use-n (-> fn-type name symbol)
                 v (if (and use-ns use-n)
-                    (ns-resolve use-ns use-n))]
+                    (do
+                      (require use-ns)
+                      (ns-resolve use-ns use-n)))]
             (cond v v
                   required? (throw (RuntimeException. (<< "could not resolve for fn-type: ~{fn-type} in ~{config}")))
                   true nil))
@@ -30,7 +32,9 @@
                 use-ns (or ns (:ns config))
                 use-n n
                 v (if (and use-ns use-n)
-                    (ns-resolve use-ns use-n))]
+                    (do
+                      (require use-ns)
+                      (ns-resolve use-ns use-n)))]
             (cond v v
                   required? (throw (RuntimeException. (<< "could not resolve for fn-type: ~{fn-type} in ~{config}")))
                   true nil))
