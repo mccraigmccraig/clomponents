@@ -29,3 +29,17 @@
 (defn destroy
   [registry id]
   (control/destroy (registry id)))
+
+(defn swap-registry
+  "given an atom containing a current registry, and config for a new registry, first
+   destroy all clomponents in the current registry, then swap the atom for a new
+   registry initialised from the config"
+  [registry-atom registry-config]
+  (swap! registry-atom
+         (fn [old-registry]
+           (-?>> old-registry
+                 reverse
+                 (map (fn [[key clomponent]]
+                        (control/destroy clomponent)))
+                 dorun)
+           (create-registry registry-config))))

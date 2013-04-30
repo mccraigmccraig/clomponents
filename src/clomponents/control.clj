@@ -1,6 +1,7 @@
 (ns clomponents.control
   (:use clojure.core.strint
-        clojure.core.incubator)
+        clojure.core.incubator
+        midje.open-protocols)
   (:require [clojure.tools.logging :as log]))
 
 (defprotocol Clomponent
@@ -42,7 +43,7 @@
           true
           (throw (RuntimeException. (<< "unrecognised config for fn-type: ~{fn-type} in ~{config}"))))))
 
-(defrecord namespace-clomponent [config obj]
+(defrecord-openly namespace-clomponent [config obj]
   Clomponent
   (create [this]
     (dosync
@@ -52,13 +53,12 @@
 
   (destroy [this]
     (dosync
-     (if-not (ensure obj)
-       (throw (RuntimeException. "no object!")))
-     (let [destroy-fn (resolve-fn config :destroy :required? false)
-           result (if destroy-fn (try (destroy-fn config @obj)
-                                      (catch Exception e (log/warn e (<< "error closing clomponent: ~{config}")))))]
-       (ref-set obj nil)
-       result)))
+     (if (ensure obj)
+       (let [destroy-fn (resolve-fn config :destroy :required? false)
+             result (if destroy-fn (try (destroy-fn config @obj)
+                                        (catch Exception e (log/warn e (<< "error closing clomponent: ~{config}")))))]
+         (ref-set obj nil)
+         result))))
 
   (object [this]
     @obj)
