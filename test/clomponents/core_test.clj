@@ -50,5 +50,13 @@
     (create @ratom :bar) => ..barobj..
 
     (@ratom :baz) =not=> baz-clomp
-    (create @ratom :baz) => ..bazobj..
-    ))
+    (create @ratom :baz) => ..bazobj..))
+
+(fact "swap-registry should do nothing if the old registry is null"
+  (let [config {:foo {:id ..idfoo..
+                      :create (fn [c] (fact (:id c) => ..idfoo..) ..fooobj..)}}
+        ratom (atom nil)]
+
+    (swap-registry ratom config) => anything
+
+    (create @ratom :foo) => ..fooobj..))
