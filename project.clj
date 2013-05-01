@@ -18,8 +18,8 @@
 
   :dependencies ~(conj shared '[org.clojure/clojure "1.5.1"])
 
-  :profiles {:all {:dependencies ~shared}
-             :dev {:dependencies [[midje "1.5.1"]]}
+  :aliases {"with-all-dev" ["with-profile" "1.4,dev:1.5,dev"]}
+  :profiles {:dev {:dependencies [[midje "1.5.1"]]}
              :production {}
              :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}
              :1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}}
