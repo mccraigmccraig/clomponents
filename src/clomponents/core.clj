@@ -6,7 +6,7 @@
 
 (defn create-registry
   "create a registry of clomponents from a hash of configuration. clomponent
-   objects will be registered against the same keys in the registry as their
+   objects will be registered against the same keys in the registry that their
    config is registered against in the config"
   [registry-config]
   (reduce (fn [r [id clomponent-config]]
@@ -15,8 +15,8 @@
           registry-config))
 
 (defn create
-  [registry id & params]
-  (control/create (registry id)))
+  [registry id & {:as additional-config}]
+  (control/create (registry id) additional-config))
 
 (defn object
   [registry id]

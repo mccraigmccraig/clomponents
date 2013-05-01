@@ -9,7 +9,7 @@
                       :create (fn [c] (fact (:id c) => ..idfoo..) ..fooobj..)
                       :fibblerise (fn [c o] (fact (:id c) => ..idfoo.. o => ..fooobj..) ..fibblerise..)}
                 :bar {:id ..idbar..
-                      :create (fn [c] (fact (:id c) => ..idbar..) ..barobj..)
+                      :create (fn [c] (fact (:id c) => ..idbar.. (:additional-data c) => ..additional..) ..barobj..)
                       :destroy (fn [c o] (fact (:id c) => ..idbar.. o => ..barobj..) ..destroy-bar..)}}
         r (create-registry config)]
 
@@ -18,7 +18,7 @@
     (perform r :foo :fibblerise) => ..fibblerise..
     (destroy r :foo) => nil
 
-    (create r :bar) => ..barobj..
+    (create r :bar :additional-data ..additional..) => ..barobj..
     (object r :bar) => ..barobj..
     (destroy r :bar) => ..destroy-bar..))
 
