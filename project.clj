@@ -13,6 +13,8 @@
   :min-lein-version "2.0.0"
 
   :url "http://github.com/mccraigmccraig/clomponents"
+  :scm {:name "git"
+        :url "http://github.com/mccraigmccraig/clomponents"}
 
   :plugins [[lein-midje "3.0.1"]]
 
