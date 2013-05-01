@@ -4,7 +4,7 @@
     [org.clojure/core.incubator "0.1.2"]
     ])
 
-(defproject clomponents "0.3.0"
+(defproject clomponents "0.4.0"
   :description "component configuration for clojure"
 
   :license {:name "Eclipse Public License"
