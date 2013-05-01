@@ -31,7 +31,14 @@
 
     (destroy cl) => :destroy
     @(:obj cl) => nil
-    (object cl)) => ..obj..)
+    (object cl) => ..obj..))
+
+(fact "pass additional-config to create"
+  (let [c (fn [config] (fact (:id config) => ..id.. (:additional-data config) => ..additional..) ..obj..)
+        cl (create-namespace-clomponent {:id ..id.. :create c})]
+
+    (create cl {:additional-data ..additional..}) => ..obj..
+    (object cl) => ..obj..))
 
 (fact "no destroy function"
   (let [c (fn [config] (fact (:id config) => ..id..) ..obj..)

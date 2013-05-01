@@ -5,7 +5,7 @@
   (:require [clojure.tools.logging :as log]))
 
 (defprotocol Clomponent
-  (create [this])
+  (create [this] [this additional-config])
   (destroy [this])
   (object [this])
   (perform [this action]))
@@ -45,11 +45,15 @@
 
 (defrecord-openly namespace-clomponent [config obj]
   Clomponent
+
   (create [this]
+    (create this nil))
+
+  (create [this additional-config]
     (dosync
      (if-not (ensure obj)
        (ref-set obj
-                ((resolve-fn config :create) config)))))
+                ((resolve-fn config :create) (merge config additional-config))))))
 
   (destroy [this]
     (dosync
