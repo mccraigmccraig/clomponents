@@ -23,7 +23,7 @@ functions can be found in several ways :
 
 add the dependency to your project.clj
 
-    [clomponents "0.1.0"]
+    [clomponents "0.4.0"]
 
 define some components
 
