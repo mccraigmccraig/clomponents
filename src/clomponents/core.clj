@@ -14,22 +14,6 @@
           {}
           registry-config))
 
-(defn create
-  [registry id & {:as additional-config}]
-  (control/create (registry id) additional-config))
-
-(defn object
-  [registry id]
-  (control/object (registry id)))
-
-(defn perform
-  [registry id action]
-  (control/perform (registry id) action))
-
-(defn destroy
-  [registry id]
-  (control/destroy (registry id)))
-
 (defn swap-registry
   "given an atom containing a current registry, and config for a new registry, first
    destroy all clomponents in the current registry, then swap the atom for a new

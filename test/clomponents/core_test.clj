@@ -13,14 +13,14 @@
                       :destroy (fn [c o] (fact (:id c) => ..idbar.. o => ..barobj..) ..destroy-bar..)}}
         r (create-registry config)]
 
-    (create r :foo) => ..fooobj..
-    (object r :foo) => ..fooobj..
-    (perform r :foo :fibblerise) => ..fibblerise..
-    (destroy r :foo) => nil
+    (control/create (:foo r)) => ..fooobj..
+    (control/object (:foo r)) => ..fooobj..
+    (control/perform (:foo r) :fibblerise) => ..fibblerise..
+    (control/destroy (:foo r)) => nil
 
-    (create r :bar :additional-data ..additional..) => ..barobj..
-    (object r :bar) => ..barobj..
-    (destroy r :bar) => ..destroy-bar..))
+    (control/create (:bar r) {:additional-data ..additional..}) => ..barobj..
+    (control/object (:bar r)) => ..barobj..
+    (control/destroy (:bar r)) => ..destroy-bar..))
 
 (fact "swap-registry should destroy the old registry clomponents before creating new"
   (let [config {:foo {:id ..idfoo..
@@ -44,13 +44,13 @@
       (control/destroy foo-clomp) => nil)
 
     (@ratom :foo) =not=> foo-clomp
-    (create @ratom :foo) => ..fooobj..
+    (control/create (:foo @ratom)) => ..fooobj..
 
     (@ratom :bar) =not=> bar-clomp
-    (create @ratom :bar) => ..barobj..
+    (control/create (:bar @ratom)) => ..barobj..
 
     (@ratom :baz) =not=> baz-clomp
-    (create @ratom :baz) => ..bazobj..))
+    (control/create (:baz @ratom)) => ..bazobj..))
 
 (fact "swap-registry should do nothing if the old registry is null"
   (let [config {:foo {:id ..idfoo..
@@ -59,4 +59,4 @@
 
     (swap-registry ratom config) => anything
 
-    (create @ratom :foo) => ..fooobj..))
+    (control/create (:foo @ratom)) => ..fooobj..))
