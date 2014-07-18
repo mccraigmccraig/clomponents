@@ -2,7 +2,8 @@
   (:use clojure.core.strint
         clojure.core.incubator
         midje.open-protocols)
-  (:require [clojure.tools.logging :as log]))
+  (:require midje.sweet
+            [clojure.tools.logging :as log]))
 
 (defprotocol Clomponent
   (create [this] [this additional-config])
