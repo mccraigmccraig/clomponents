@@ -1,8 +1,9 @@
 (ns clomponents.control
   (:use clojure.core.strint
         clojure.core.incubator
-        midje.open-protocols)
-  (:require midje.sweet
+        ;; midje.open-protocols
+        )
+  (:require ;; midje.sweet
             [clojure.tools.logging :as log]))
 
 (defprotocol Clomponent
@@ -44,7 +45,7 @@
           true
           (throw (RuntimeException. (<< "unrecognised config for fn-type: ~{fn-type} in ~{config}"))))))
 
-(defrecord-openly namespace-clomponent [config obj]
+(defrecord namespace-clomponent [config obj]
   Clomponent
 
   (create [this]
